@@ -1,1 +1,1 @@
-https://tedboy.github.io/jinja2_autodoc
+https://tedboy.github.io/jinja2
