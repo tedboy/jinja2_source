@@ -54,7 +54,7 @@ extensions = [
     'IPython.sphinxext.ipython_directive',
     'numpydoc', # used to parse numpy-style docstrings for autodoc    
 ]
-
+extensions.append('jinjaext')
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -106,6 +106,16 @@ language = None
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = [
 # 'off_doc*',
+# 'api.rst',
+# 'api.bccache.rst',
+# 'api.nodes.rst',
+# 'api.sandbox.rst',
+# 'api.exceptions.rst',
+# 'api.environment.rst',
+# 'api.runtime.rst',
+# 'api.ext.rst',
+# 'api.lexer.rst',
+# 'api.parser.rst',
 # 'demo_autoclass.rst',
 # 'demo_automodule.rst',
 # 'demo_automodule.rst',
@@ -137,6 +147,7 @@ exclude_patterns = [
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
+# pygments_style = 'jinjaext.JinjaStyle'
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []

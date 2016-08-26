@@ -12,11 +12,14 @@ Jinja2 API I created using the rst source codes and ``autosummary`` from http://
    :maxdepth: 2
    :caption: Table of Contents
 
+   off_doc
    api
-   api_sandbox
+   api.sandbox
    api.exceptions
    api.environment
    api.runtime
    api.bccache
    api.nodes
-   off_doc
+   api.ext
+   api.lexer
+   api.parser
