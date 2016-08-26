@@ -10,9 +10,13 @@ Jinja2 API I created using the rst source codes and ``autosummary`` from http://
 
 .. toctree::
    :maxdepth: 2
-   :numbered:
    :caption: Table of Contents
 
    api
    api_sandbox
    api.exceptions
+   api.environment
+   api.runtime
+   api.bccache
+   api.nodes
+   off_doc

@@ -114,124 +114,14 @@ render Jinja2 templates.  The :ref:`low-level-api` on the other side is only
 useful if you want to dig deeper into Jinja2 or :ref:`develop extensions
 <jinja-extensions>`.
 
-.. autoclass:: Environment([options])
-    :members: from_string, get_template, select_template,
-              get_or_select_template, join_path, extend, compile_expression,
-              compile_templates, list_templates, add_extension
+:class:`Environment`
+""""""""""""""""""""
 
-    .. attribute:: shared
+:class:`Template`
+"""""""""""""""""
 
-        If a template was created by using the :class:`Template` constructor
-        an environment is created automatically.  These environments are
-        created as shared environments which means that multiple templates
-        may have the same anonymous environment.  For all shared environments
-        this attribute is `True`, else `False`.
-
-    .. attribute:: sandboxed
-
-        If the environment is sandboxed this attribute is `True`.  For the
-        sandbox mode have a look at the documentation for the
-        :class:`~jinja2.sandbox.SandboxedEnvironment`.
-
-    .. attribute:: filters
-
-        A dict of filters for this environment.  As long as no template was
-        loaded it's safe to add new filters or remove old.  For custom filters
-        see :ref:`writing-filters`.  For valid filter names have a look at
-        :ref:`identifier-naming`.
-
-    .. attribute:: tests
-
-        A dict of test functions for this environment.  As long as no
-        template was loaded it's safe to modify this dict.  For custom tests
-        see :ref:`writing-tests`.  For valid test names have a look at
-        :ref:`identifier-naming`.
-
-    .. attribute:: globals
-
-        A dict of global variables.  These variables are always available
-        in a template.  As long as no template was loaded it's safe
-        to modify this dict.  For more details see :ref:`global-namespace`.
-        For valid object names have a look at :ref:`identifier-naming`.
-
-    .. attribute:: code_generator_class
-
-       The class used for code generation.  This should not be changed
-       in most cases, unless you need to modify the Python code a
-       template compiles to.
-
-    .. attribute:: context_class
-
-       The context used for templates.  This should not be changed
-       in most cases, unless you need to modify internals of how
-       template variables are handled.  For details, see
-       :class:`~jinja2.runtime.Context`.
-
-    .. automethod:: overlay([options])
-
-    .. method:: undefined([hint, obj, name, exc])
-
-        Creates a new :class:`Undefined` object for `name`.  This is useful
-        for filters or functions that may return undefined objects for
-        some operations.  All parameters except of `hint` should be provided
-        as keyword parameters for better readability.  The `hint` is used as
-        error message for the exception if provided, otherwise the error
-        message will be generated from `obj` and `name` automatically.  The exception
-        provided as `exc` is raised if something with the generated undefined
-        object is done that the undefined object does not allow.  The default
-        exception is :exc:`UndefinedError`.  If a `hint` is provided the
-        `name` may be omitted.
-
-        The most common way to create an undefined object is by providing
-        a name only::
-
-            return environment.undefined(name='some_name')
-
-        This means that the name `some_name` is not defined.  If the name
-        was from an attribute of an object it makes sense to tell the
-        undefined object the holder object to improve the error message::
-
-            if not hasattr(obj, 'attr'):
-                return environment.undefined(obj=obj, name='attr')
-
-        For a more complex example you can provide a hint.  For example
-        the :func:`first` filter creates an undefined object that way::
-
-            return environment.undefined('no first item, sequence was empty')            
-
-        If it the `name` or `obj` is known (for example because an attribute
-        was accessed) it should be passed to the undefined object, even if
-        a custom `hint` is provided.  This gives undefined objects the
-        possibility to enhance the error message.
-
-.. autoclass:: Template
-    :members: module, make_module
-
-    .. attribute:: globals
-
-        The dict with the globals of that template.  It's unsafe to modify
-        this dict as it may be shared with other templates or the environment
-        that loaded the template.
-
-    .. attribute:: name
-
-        The loading name of the template.  If the template was loaded from a
-        string this is `None`.
-
-    .. attribute:: filename
-
-        The filename of the template on the file system if it was loaded from
-        there.  Otherwise this is `None`.
-
-    .. automethod:: render([context])
-
-    .. automethod:: generate([context])
-
-    .. automethod:: stream([context])
-
-
-.. autoclass:: jinja2.environment.TemplateStream()
-    :members: disable_buffering, enable_buffering, dump
+:class:`jinja2.environment.TemplateStream`
+""""""""""""""""""""""""""""""""""""""""""
 
 
 Autoescaping
@@ -297,43 +187,19 @@ others fail.
 The closest to regular Python behavior is the `StrictUndefined` which
 disallows all operations beside testing if it's an undefined object.
 
-.. autoclass:: jinja2.Undefined()
+:class:`Undefined`
+""""""""""""""""""
 
-    .. attribute:: _undefined_hint
+:class:`DebugUndefined`
+"""""""""""""""""""""""
 
-        Either `None` or an unicode string with the error message for
-        the undefined object.
-
-    .. attribute:: _undefined_obj
-
-        Either `None` or the owner object that caused the undefined object
-        to be created (for example because an attribute does not exist).
-
-    .. attribute:: _undefined_name
-
-        The name for the undefined variable / attribute or just `None`
-        if no such information exists.
-
-    .. attribute:: _undefined_exception
-
-        The exception that the undefined object wants to raise.  This
-        is usually one of :exc:`UndefinedError` or :exc:`SecurityError`.
-
-    .. method:: _fail_with_undefined_error(\*args, \**kwargs)
-
-        When called with any arguments this method raises
-        :attr:`_undefined_exception` with an error message generated
-        from the undefined hints stored on the undefined object.
-
-.. autoclass:: jinja2.DebugUndefined()
-
-.. autoclass:: jinja2.StrictUndefined()
-
+:class:`StrictUndefined`
+""""""""""""""""""""""""
 There is also a factory function that can decorate undefined objects to
 implement logging on failures:
 
-.. autofunction:: jinja2.make_logging_undefined
-
+:func:`make_logging_undefined`
+""""""""""""""""""""""""""""""
 Undefined objects are created by calling :attr:`undefined`.
 
 .. admonition:: Implementation
@@ -364,52 +230,8 @@ Undefined objects are created by calling :attr:`undefined`.
 The Context
 -----------
 
-.. autoclass:: jinja2.runtime.Context()
-    :members: resolve, get_exported, get_all
-
-    .. attribute:: parent
-
-        A dict of read only, global variables the template looks up.  These
-        can either come from another :class:`Context`, from the
-        :attr:`Environment.globals` or :attr:`Template.globals` or points
-        to a dict created by combining the globals with the variables
-        passed to the render function.  It must not be altered.
-
-    .. attribute:: vars
-
-        The template local variables.  This list contains environment and
-        context functions from the :attr:`parent` scope as well as local
-        modifications and exported variables from the template.  The template
-        will modify this dict during template evaluation but filters and
-        context functions are not allowed to modify it.
-
-    .. attribute:: environment
-
-        The environment that loaded the template.
-
-    .. attribute:: exported_vars
-
-        This set contains all the names the template exports.  The values for
-        the names are in the :attr:`vars` dict.  In order to get a copy of the
-        exported variables as dict, :meth:`get_exported` can be used.
-
-    .. attribute:: name
-
-        The load name of the template owning this context.
-
-    .. attribute:: blocks
-
-        A dict with the current mapping of blocks in the template.  The keys
-        in this dict are the names of the blocks, and the values a list of
-        blocks registered.  The last item in each list is the current active
-        block (latest in the inheritance chain).
-
-    .. attribute:: eval_ctx
-
-        The current :ref:`eval-context`.
-
-    .. automethod:: jinja2.runtime.Context.call(callable, \*args, \**kwargs)
-
+:class:`jinja2.runtime.Context`
+"""""""""""""""""""""""""""""""
 
 .. admonition:: Implementation
 
@@ -435,25 +257,34 @@ size by default and templates are automatically reloaded.
 All loaders are subclasses of :class:`BaseLoader`.  If you want to create your
 own loader, subclass :class:`BaseLoader` and override `get_source`.
 
-.. autoclass:: jinja2.BaseLoader
-    :members: get_source, load
+:class:`jinja2.BaseLoader`
+""""""""""""""""""""""""""
+
+.. rubric:: Built-in Loaders
 
 Here a list of the builtin loaders Jinja2 provides:
 
-.. autoclass:: jinja2.FileSystemLoader
+:class:`jinja2.FileSystemLoader`
+""""""""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.PackageLoader
+:class:`jinja2.PackageLoader`
+"""""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.DictLoader
+:class:`jinja2.DictLoader`
+""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.FunctionLoader
+:class:`jinja2.FunctionLoader`
+""""""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.PrefixLoader
+:class:`jinja2.PrefixLoader`
+""""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.ChoiceLoader
 
-.. autoclass:: jinja2.ModuleLoader
+:class:`jinja2.ChoiceLoader`
+""""""""""""""""""""""""""""
 
+:class:`jinja2.ModuleLoader`
+""""""""""""""""""""""""""""
 
 .. _bytecode-cache:
 
@@ -470,32 +301,20 @@ the application.
 
 To use a bytecode cache, instantiate it and pass it to the :class:`Environment`.
 
-.. autoclass:: jinja2.BytecodeCache
-    :members: load_bytecode, dump_bytecode, clear
+:class:`jinja2.BytecodeCache`
+"""""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.bccache.Bucket
-    :members: write_bytecode, load_bytecode, bytecode_from_string,
-              bytecode_to_string, reset
-
-    .. attribute:: environment
-
-        The :class:`Environment` that created the bucket.
-
-    .. attribute:: key
-
-        The unique cache key for this bucket
-
-    .. attribute:: code
-
-        The bytecode if it's loaded, otherwise `None`.
+:class:`jinja2.bccache.Bucket`
+""""""""""""""""""""""""""""""
 
 
-Builtin bytecode caches:
+.. rubric:: Builtin bytecode caches:
 
-.. autoclass:: jinja2.FileSystemBytecodeCache
+:class:`jinja2.FileSystemBytecodeCache`
+"""""""""""""""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.MemcachedBytecodeCache
-
+:class:`jinja2.MemcachedBytecodeCache`
+""""""""""""""""""""""""""""""""""""""
 
 Utilities
 ---------
@@ -503,18 +322,28 @@ Utilities
 These helper functions and classes are useful if you add custom filters or
 functions to a Jinja2 environment.
 
-.. autofunction:: jinja2.environmentfilter
+:func:`jinja2.environmentfilter`
+""""""""""""""""""""""""""""""""
 
-.. autofunction:: jinja2.contextfilter
+:func:`jinja2.contextfilter`
+""""""""""""""""""""""""""""
 
-.. autofunction:: jinja2.evalcontextfilter
 
-.. autofunction:: jinja2.environmentfunction
+:func:`jinja2.evalcontextfilter`
+""""""""""""""""""""""""""""""""
 
-.. autofunction:: jinja2.contextfunction
+:func:`jinja2.environmentfunction`
+""""""""""""""""""""""""""""""""""
 
-.. autofunction:: jinja2.evalcontextfunction
+:func:`jinja2.contextfunction`
+""""""""""""""""""""""""""""""
 
+
+:func:`jinja2.evalcontextfunction`
+""""""""""""""""""""""""""""""""""
+
+escape(s)
+"""""""""
 .. function:: escape(s)
 
     Convert the characters ``&``, ``<``, ``>``, ``'``, and ``"`` in string `s`
@@ -524,12 +353,14 @@ functions to a Jinja2 environment.
 
     The return value is a :class:`Markup` string.
 
-.. autofunction:: jinja2.clear_caches
+:func:`jinja2.clear_caches`
+"""""""""""""""""""""""""""
 
-.. autofunction:: jinja2.is_undefined
+:func:`jinja2.is_undefined`
+"""""""""""""""""""""""""""
 
-.. autoclass:: jinja2.Markup([string])
-    :members: escape, unescape, striptags
+:class:`jinja2.Markup`
+""""""""""""""""""""""
 
 .. admonition:: Note
 
@@ -541,39 +372,24 @@ functions to a Jinja2 environment.
 Exceptions
 ----------
 
-.. autoexception:: jinja2.TemplateError
+:class:`jinja2.TemplateError`
+"""""""""""""""""""""""""""""
 
-.. autoexception:: jinja2.UndefinedError
+:class:`jinja2.UndefinedError`
+""""""""""""""""""""""""""""""
 
-.. autoexception:: jinja2.TemplateNotFound
+:class:`jinja2.TemplateNotFound`
+""""""""""""""""""""""""""""""""
 
-.. autoexception:: jinja2.TemplatesNotFound
+:class:`jinja2.TemplatesNotFound`
+"""""""""""""""""""""""""""""""""
 
-.. autoexception:: jinja2.TemplateSyntaxError
+:class:`jinja2.TemplateSyntaxError`
+"""""""""""""""""""""""""""""""""""
 
-    .. attribute:: message
 
-        The error message as utf-8 bytestring.
-
-    .. attribute:: lineno
-
-        The line number where the error occurred
-
-    .. attribute:: name
-
-        The load name for the template as unicode string.
-
-    .. attribute:: filename
-
-        The filename that loaded the template as bytestring in the encoding
-        of the file system (most likely utf-8 or mbcs on Windows systems).
-
-    The reason why the filename and error message are bytestrings and not
-    unicode strings is that Python 2.x is not using unicode for exceptions
-    and tracebacks as well as the compiler.  This will change with Python 3.
-
-.. autoexception:: jinja2.TemplateAssertionError
-
+:class:`jinja2.TemplateAssertionError`
+""""""""""""""""""""""""""""""""""""""
 
 .. _writing-filters:
 
@@ -680,17 +496,8 @@ must only happen with a :class:`nodes.EvalContextModifier` and
 :class:`nodes.ScopedEvalContextModifier` from an extension, not on the
 eval context object itself.
 
-.. autoclass:: jinja2.nodes.EvalContext
-
-   .. attribute:: autoescape
-
-      `True` or `False` depending on if autoescaping is active or not.
-
-   .. attribute:: volatile
-
-      `True` if the compiler cannot evaluate some expressions at compile
-      time.  At runtime this should always be `False`.
-
+:class:`jinja2.nodes.EvalContext`
+"""""""""""""""""""""""""""""""""
 
 .. _writing-tests:
 
@@ -786,7 +593,7 @@ don't recommend using any of those.
     This attribute is `False` if there is a newer version of the template
     available, otherwise `True`.
 
-.. admonition:: Note
+.. note:: 
 
     The low-level API is fragile.  Future Jinja2 versions will try not to
     change it in a backwards incompatible way but modifications in the Jinja2
