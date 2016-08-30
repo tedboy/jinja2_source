@@ -1,6 +1,10 @@
 Integration
 ===========
 
+.. contents:: `Contents`
+   :depth: 2
+   :local:
+
 Jinja2 provides some code for integration into other tools such as frameworks,
 the `Babel`_ library or your favourite editor for fancy code highlighting.
 This is a brief description of whats included.

@@ -1,6 +1,10 @@
 Tips and Tricks
 ===============
 
+.. contents:: `Contents`
+   :depth: 2
+   :local:
+   
 .. highlight:: html+jinja
 
 This part of the documentation shows some tips and tricks for Jinja2

@@ -1,6 +1,10 @@
 Switching from other Template Engines
 =====================================
 
+.. contents:: `Contents`
+   :depth: 2
+   :local:
+   
 .. highlight:: html+jinja
 
 If you have used a different template engine in the past and want to switch

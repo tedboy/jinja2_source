@@ -3,6 +3,10 @@ Frequently Asked Questions
 
 This page answers some of the often asked questions about Jinja.
 
+.. contents:: `Contents`
+   :depth: 2
+   :local:
+   
 .. highlight:: html+jinja
 
 Why is it called Jinja?

@@ -9,9 +9,12 @@ Jinja2 API I created using the rst source codes and ``autosummary`` from http://
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Table of Contents
 
+   off_doc.intro
+   off_doc.templates
+   off_doc.extensions.rst
    off_doc
    api
    api.sandbox

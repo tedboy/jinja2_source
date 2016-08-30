@@ -10,6 +10,7 @@ code into a reusable class like adding support for internationalization.
 .. toctree::
     :maxdepth: 2
     :caption: Contents
+    :numbered:
     :name: extensions
 
     ext1

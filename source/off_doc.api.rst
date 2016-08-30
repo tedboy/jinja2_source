@@ -1,6 +1,11 @@
 API
 ===
 
+.. contents:: `Contents`
+   :depth: 1
+   :local:
+
+
 .. module:: jinja2
     :synopsis: public Jinja2 API
 

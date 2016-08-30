@@ -1,6 +1,11 @@
 Sandbox
 =======
 
+.. contents:: `Contents`
+   :depth: 2
+   :local:
+
+
 .. module:: jinja2.sandbox
 
 The Jinja2 sandbox can be used to evaluate untrusted code.  Access to unsafe

@@ -3,6 +3,11 @@
 Writing Extensions
 ------------------
 
+.. contents:: `Contents`
+   :depth: 2
+   :local:
+
+
 .. module:: jinja2.ext
 
 By writing extensions you can add custom tags to Jinja2.  This is a non-trivial
