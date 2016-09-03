@@ -1,6 +1,3 @@
-{{ fullname }}
-{{ underline }}
-
 .. automodule:: {{ fullname }}
 
    {% block functions %}
