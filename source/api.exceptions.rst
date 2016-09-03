@@ -1,6 +1,5 @@
 .. toctree::
     :maxdepth: 1
-    :caption: Auto-generated API
 
     generated/jinja2.exceptions
 

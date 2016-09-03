@@ -16,6 +16,11 @@ Jinja2 API I created using the rst source codes and ``autosummary`` from http://
    off_doc.templates
    off_doc.extensions.rst
    off_doc
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Auto-generated API
+
    api
    api.sandbox
    api.exceptions
